@@ -16,7 +16,7 @@ import java.util.Map;
  *
  *      循环一遍即可找到结果，另外HashMap中查找的时间复杂度为O(1)，遍历数组的时间复杂度为O(n)，所以总体的时间复杂度为O(n)。
  */
-public class Solution_01 {
+public class Solution_0001 {
 
     public static int[] twoSum(int[] nums, int target){
 
