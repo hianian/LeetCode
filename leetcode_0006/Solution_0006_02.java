@@ -8,7 +8,7 @@ import java.util.Map;
  * @Time : 2022/2/20 11:09
  * @File : Solution_0006_02.java
  *
- * 递归法比较直观，时间复杂度为 O(n^2)，而且内存开销比较大，这里修改为非递归的形式。
+ * 递归法比较直观，这里修改为非递归的形式。
  */
 public class Solution_0006_02 {
 
@@ -27,7 +27,52 @@ public class Solution_0006_02 {
 
     public static List<String> letterCombinations(String digits) {
 
-        return new ArrayList<>();
+        List<String> result = new ArrayList<>();
+
+        char[] chars = digits.toCharArray();
+
+        int size;
+
+        for (int i = 0; i < digits.length(); i++) {
+
+            // 遍历该元素前先获取result中的组合个数，用于后续重新组合
+            size = result.size();
+
+            for (int j = 0; j < map.get(chars[i]).length; j++) {
+
+                if(size == 0){
+                    result.add(map.get(chars[i])[j]);
+                } else {
+                    for (int k = 0; k < size; k++) {
+                        // 修改原有的组合
+                        if(k + j * size < size){
+                            result.set(k + j * size, result.get(k) + map.get(chars[i])[j]);
+                        } else{
+                            // 添加新的组合
+                            // 注意，因为已经修改了原有的组合，所以后续组合的时候，需要取到原有的组合，
+                            // 而新的组合其实就是添加了一个字符，所以获取原有的组合就是去掉一个字符，即result.get(j).length() - 1)
+                            // 然后再将 遍历字符对应的数组 和 原有组合 进行组合
+                            result.add(result.get(k).substring(0, result.get(k).length() - 1) + map.get(chars[i])[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+//        String digits = "23";
+//        String digits = "3";
+        String digits = "";
+
+        List<String> result = letterCombinations(digits);
+
+        for (String s : result) {
+            System.out.println(s);
+        }
     }
 
 }
